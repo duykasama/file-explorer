@@ -18,7 +18,7 @@ namespace FileExplorer.Services
             
             if (dF.EnumerateFiles().Count() == 0)
             {
-                return Enumerable.Empty<Models.File>();
+                return Task.FromResult(Enumerable.Empty<Models.File>());
             }
 
             foreach (var f in dF.EnumerateFiles())
@@ -33,7 +33,7 @@ namespace FileExplorer.Services
                 });
             }
 
-            return files;
+            return Task.FromResult(files.AsEnumerable());
         }
     }
 }

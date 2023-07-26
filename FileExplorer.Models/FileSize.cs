@@ -15,17 +15,42 @@ namespace FileExplorer.Models
 
         public string InBytes()
         {
-            return $"{Size / 1024} bytes";
+            return String.Format("{0,-10} bytes", Size);
+        }
+
+        public string InKiloBytes()
+        {
+            return String.Format("{0,-10} kB", Size / 1024);
         }
 
         public string InMegaBytes() 
         {
-            return $"{(Size / 1024) / 1024} MB";
+            return String.Format("{0,-10} MB", (Size / 1024) / 1024);
         }
 
         public string InGigaBytes()
         {
-            return $"{((Size / 1024) / 1024) / 1024} GB";
+            return String.Format("{0,-10} GB", ((Size / 1024) / 1024) / 1024);
+        }
+
+        public string GetSize()
+        {
+            if (Size > 1024 * 1024 * 1024)
+            {
+                return InGigaBytes();
+            }
+            else if (Size > 1024 * 1024)
+            {
+                return InMegaBytes();
+            }
+            else if (Size > 1024)
+            {
+                return InKiloBytes();
+            }
+            else
+            {
+                return InBytes();
+            }
         }
     }
 }

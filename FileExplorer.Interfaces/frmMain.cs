@@ -10,20 +10,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.ListViewItem;
 
 namespace FileExplorer.Interfaces
 {
     public partial class frmMain : Form
     {
         private readonly IFileService _fileService;
-        IEnumerable<Models.Directory> directories;
-        IEnumerable<Models.File> files;
+        private IEnumerable<Models.Directory> directories;
+        private IEnumerable<Models.File> files;
 
         public frmMain()
         {
             InitializeComponent();
             _fileService = new FileService();
-            files = _fileService.GetFiles("D:\\");
+            directories = new List<Models.Directory>();
+            files = _fileService.GetFiles("D:\\").Result;
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -32,12 +34,10 @@ namespace FileExplorer.Interfaces
             {
                 ListViewItem item = new ListViewItem();
                 item.Text = file.Name;
-                //item.SubItems.Add(file.Name);
                 item.SubItems.Add(file.Path);
                 item.SubItems.Add(file.CreateDate.ToString("dd/MMM/yyyy"));
-                item.SubItems.Add(file.Size.InMegaBytes());
+                item.SubItems.Add(file.Size.GetSize());
                 item.SubItems.Add(file.Extension);
-                item.BackColor = Color.Red;
                 lvFiles.Items.Add(item);
             }
             

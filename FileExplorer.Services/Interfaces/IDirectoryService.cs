@@ -9,6 +9,6 @@ namespace FileExplorer.Services.Interfaces
 {
     public interface IDirectoryService
     {
-        Task<IEnumerable<Models.Directory>> GetDirectories(); 
+        Task<IEnumerable<Models.Directory>> GetDirectories(string directoryPath); 
     }
 }

@@ -46,6 +46,7 @@
             lvFiles.TabIndex = 0;
             lvFiles.UseCompatibleStateImageBehavior = false;
             lvFiles.View = View.Details;
+            lvFiles.ColumnClick += lvFiles_ColumnClick;
             // 
             // columnHeader1
             // 

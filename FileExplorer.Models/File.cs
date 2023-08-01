@@ -10,7 +10,7 @@ namespace FileExplorer.Models
     {
         public string Name { get; set; } = null!;
         public string Path { get; set; } = null!;
-        public DateTime CreateDate { get; set; }
+        public DateTime CreationDate { get; set; }
         public FileSize Size { get; set; } = new FileSize();
         public string Extension { get; set; } = null!;
     }

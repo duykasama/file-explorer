@@ -1,4 +1,5 @@
-﻿using FileExplorer.Services.Interfaces;
+﻿using FileExplorer.Models;
+using FileExplorer.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,27 @@ namespace FileExplorer.Services
 {
     public class DirectoryService : IDirectoryService
     {
-        public Task<IEnumerable<Models.Directory>> GetDirectories()
+        private readonly FileService _fileService;
+        public DirectoryService()
         {
-            throw new NotImplementedException();
+            _fileService = new FileService();
+        }
+        public Task<IEnumerable<Models.Directory>> GetDirectories(string directoryPath)
+        {
+            var directories = new List<Models.Directory>();
+            DirectoryInfo rootDirectory = new DirectoryInfo(directoryPath);
+
+            foreach (var directory in rootDirectory.EnumerateDirectories())
+            {
+                directories.Add(new Models.Directory
+                {
+                    Name = directory.Name,
+                    Path = directory.FullName,
+                    CreationDate = directory.CreationTime,
+                });
+            }
+
+            return Task.FromResult(directories.AsEnumerable());
         }
     }
 }

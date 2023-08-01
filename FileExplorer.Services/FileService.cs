@@ -13,24 +13,25 @@ namespace FileExplorer.Services
         public Task<IEnumerable<Models.File>> GetFiles(string directoryPath)
         {
             var files = new List<Models.File>();
-            var path = Path.GetFullPath(directoryPath);
             DirectoryInfo dF = new DirectoryInfo(directoryPath);
-            
-            if (dF.EnumerateFiles().Count() == 0)
-            {
-                return Task.FromResult(Enumerable.Empty<Models.File>());
-            }
 
-            foreach (var f in dF.EnumerateFiles())
+            try
             {
-                files.Add(new Models.File
+                foreach (var f in dF.EnumerateFiles())
                 {
-                    Name = f.Name,
-                    Path = f.FullName,
-                    CreateDate = f.CreationTime,
-                    Size = new FileSize(f.Length),
-                    Extension = f.Extension,
-                });
+                    files.Add(new Models.File
+                    {
+                        Name = f.Name,
+                        Path = f.FullName,
+                        CreationDate = f.CreationTime,
+                        Size = new FileSize(f.Length),
+                        Extension = f.Extension,
+                    });
+                }
+            }
+            catch 
+            {
+                
             }
 
             return Task.FromResult(files.AsEnumerable());
